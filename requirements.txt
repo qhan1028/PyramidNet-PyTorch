@@ -1,0 +1,4 @@
+numpy
+tensorboard_logger
+torch
+torchvision
