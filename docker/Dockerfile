@@ -2,7 +2,6 @@ FROM nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04
 MAINTAINER qhan@ailabs.tw
 
 # basic packages
-
 ENV TZ=Asia/Taipei
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -33,13 +32,11 @@ ENV LC_ALL=en_US.UTF-8 \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
 
-# install python packages
-
-RUN pip3 install -r requirements.txt
-
 # copy project files
 COPY . /app
-
 WORKDIR /app
+
+# install python packages
+RUN pip3 install -r requirements.txt
 
 CMD ["sleep", "infinity"]

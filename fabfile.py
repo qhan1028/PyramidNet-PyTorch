@@ -10,7 +10,7 @@ base_path = osp.realpath(osp.dirname(__file__))
 
 registries = {
     'local': "",
-    'ailabs': "registry.corp.ailabs.tw/lab/crowd-sourcing/",
+    'ailabs': "registry.corp.ailabs.tw/qhan/crowd-sourcing/",
     'nchc': "hc1.corp.ailabs.tw:6000/"
 }
 name = 'pyramidnet'
