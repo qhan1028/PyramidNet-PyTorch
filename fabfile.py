@@ -30,7 +30,13 @@ def build(context='ailabs'):
 def run(context='ailabs', datapath='data'):
     image = osp.join(registries[context], name)
     display_name = '{}-{}'.format(name, context)
-    local('docker run -it --rm -d --name {} -v {}:/app/data {}'.format(display_name, datapath, image))
+    local('docker run --rm -d --name {} -v {}:/app/data {}'.format(display_name, datapath, image))
+
+
+@task
+def exec(context='ailabs'):
+    display_name = '{}-{}'.format(name, context)
+    local('docker exec -it {} bash'.format(display_name))
 
     
 @task
