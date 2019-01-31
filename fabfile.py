@@ -23,18 +23,19 @@ def use_context(context):
 @task
 def build(context='ailabs'):
     image = osp.join(registries[context], name)
-    local('docker build -t {} -f {} {}'.format(image, dockerfile_path, base_path))
+    local('nvidia-docker build -t {} -f {} {}'.format(image, dockerfile_path, base_path))
 
-    
+
+# need to specify shared memory size, see the issue: https://github.com/pytorch/pytorch/issues/2244#issuecomment-318864552
 @task
 def run(context='ailabs', datapath='data'):
     image = osp.join(registries[context], name)
     display_name = '{}-{}'.format(name, context)
-    local('docker run --rm -d --name {} -v {}:/app/data {}'.format(display_name, datapath, image))
+    local('nvidia-docker run --rm -d --shm-size 8G --name {} -v {}:/app/data {}'.format(display_name, datapath, image))
 
 
 @task
-def exec(context='ailabs'):
+def tty(context='ailabs'):
     display_name = '{}-{}'.format(name, context)
     local('docker exec -it {} bash'.format(display_name))
 
