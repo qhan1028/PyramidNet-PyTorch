@@ -28,10 +28,10 @@ def build(context='ailabs'):
 
 # need to specify shared memory size, see the issue: https://github.com/pytorch/pytorch/issues/2244#issuecomment-318864552
 @task
-def run(context='ailabs', datapath='data'):
+def run(context='ailabs', datapath='data', port='6001'):
     image = osp.join(registries[context], name)
-    display_name = '{}-{}'.format(name, context)
-    local('nvidia-docker run --rm -d --shm-size 8G --name {} -v {}:/app/data {}'.format(display_name, datapath, image))
+    display_name = '{}-{}-{}'.format(name, context, port)
+    local('nvidia-docker run --rm -d --shm-size 8G --name {} -p {}:6006 -v {}:/app/data {}'.format(display_name, port, datapath, image))
 
 
 @task
