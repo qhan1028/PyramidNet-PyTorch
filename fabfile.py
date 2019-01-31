@@ -25,10 +25,19 @@ def build(context='ailabs'):
     image = osp.join(registries[context], name)
     local('docker build -t {} -f {} {}'.format(image, dockerfile_path, base_path))
 
+    
 @task
 def run(context='ailabs', datapath='data'):
     image = osp.join(registries[context], name)
-    local('docker run -it --rm -v {}:/app/data {}'.format(datapath, image))
+    display_name = '{}-{}'.format(name, context)
+    local('docker run -it --rm -d --name {} -v {}:/app/data {}'.format(display_name, datapath, image))
+
+    
+@task
+def kill(context='ailabs'):
+    display_name = '{}-{}'.format(name, context)
+    local('docker kill {}'.format(display_name))
+    
     
 @task
 def push(context='ailabs'):
