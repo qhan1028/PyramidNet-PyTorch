@@ -325,21 +325,17 @@ def validate(val_loader, model, criterion, epoch):
         target = target.cuda(async=True)
 
         # for PyTorch 0.3.x, use volatile=True for preventing memory leakage in evaluation phase:`
-        input_var = torch.autograd.Variable(input, volatile=True)
-        target_var = torch.autograd.Variable(target, volatile=True)
-        output = model(input_var)
-        loss = criterion(output, target_var)
+        # input_var = torch.autograd.Variable(input, volatile=True)
+        # target_var = torch.autograd.Variable(target, volatile=True)
+        # output = model(input_var)
+        # loss = criterion(output, target_var)
 
         # for PyTorch 0.4.x, volatile=True is replaced by with torch.no.grad(), so uncomment the followings:
-        # with torch.no_grad():
-        #     input_var = torch.autograd.Variable(input)
-        #     target_var = torch.autograd.Variable(target)
-        #     output = model(input_var)
-        #     loss = criterion(output, target_var)
-
-        # compute output
-        output = model(input_var)
-        loss = criterion(output, target_var)
+        with torch.no_grad():
+            input_var = torch.autograd.Variable(input)
+            target_var = torch.autograd.Variable(target)
+            output = model(input_var)
+            loss = criterion(output, target_var)
 
         # measure accuracy and record loss
         err1, err5 = accuracy(output.data, target, topk=(1, 5))
