@@ -35,14 +35,14 @@ def run(context='ailabs', datapath='data', port='6001'):
 
 
 @task
-def tty(context='ailabs'):
-    display_name = '{}-{}'.format(name, context)
+def tty(context='ailabs', port='6001'):
+    display_name = '{}-{}-{}'.format(name, context, port)
     local('docker exec -it {} bash'.format(display_name))
 
     
 @task
-def kill(context='ailabs'):
-    display_name = '{}-{}'.format(name, context)
+def kill(context='ailabs', port='6001'):
+    display_name = '{}-{}-{}'.format(name, context, port)
     local('docker kill {}'.format(display_name))
     
     
