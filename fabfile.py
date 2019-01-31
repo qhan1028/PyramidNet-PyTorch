@@ -26,9 +26,9 @@ def build(context='ailabs'):
     local('docker build -t {} -f {} {}'.format(image, dockerfile_path, base_path))
 
 @task
-def run(context='ailabs'):
+def run(context='ailabs', datapath='data'):
     image = osp.join(registries[context], name)
-    local('docker run -it --rm {}')
+    local('docker run -it --rm -v {}:/app/data {}').format(datapath, image)
     
 @task
 def push(context='ailabs'):
